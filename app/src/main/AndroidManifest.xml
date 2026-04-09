@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToppleTheTiki">
         <activity
+            android:name=".LoadingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LobbyActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

@@ -1,6 +1,5 @@
 package com.voxcom.topplethetiki
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -8,17 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class MainActivity : AppCompatActivity() {
+class LoadingActivity : AppCompatActivity() {
+    private lateinit  var tx : TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
-        val txt  = findViewById<TextView>(R.id.txt)
-
-
-        txt.setOnClickListener {
-            val intent = Intent(this, LobbyActivity::class.java)
-            startActivity(intent)
-        }
+        setContentView(R.layout.activity_loading)
+        val number = intent.getStringExtra("player_nos")
+        tx.text ="Number of players is ${number}"
     }
 }
