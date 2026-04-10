@@ -1,23 +1,22 @@
 package com.voxcom.topplethetiki.ui.room
 
-import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.database.*
+import com.voxcom.topplethetiki.data.model.Player
 import com.voxcom.topplethetiki.databinding.ActivityRoomBinding
-import com.voxcom.topplethetiki.data.repository.RoomRepository
-import com.voxcom.topplethetiki.ui.loading.LoadingActivity
 
 class RoomActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRoomBinding
-    private val roomRepository = RoomRepository()
+    private lateinit var adapter: PlayerAdapter
 
-    private lateinit var roomId: String
+    private lateinit var database: DatabaseReference
 
-    private lateinit var playerAdapter: PlayerAdapter
-    private lateinit var avatarAdapter: AvatarAdapter
+    private var roomId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,47 +28,47 @@ class RoomActivity : AppCompatActivity() {
 
         roomId = intent.getStringExtra("ROOM_ID") ?: ""
 
-        setupUI()
-        observeRoom()
+        setupRecycler()
+        listenToPlayers()
     }
 
-    private fun setupUI() {
+    private fun setupRecycler() {
 
-        binding.tvRoomCode.text = "Room: $roomId"
+        adapter = PlayerAdapter { player ->
+            // 🔥 REAL LOGIC (for now simple)
+            Toast.makeText(this, "Clicked: ${player.username}", Toast.LENGTH_SHORT).show()
+        }
 
-        // Player list
-        playerAdapter = PlayerAdapter()
         binding.rvPlayers.layoutManager = LinearLayoutManager(this)
-        binding.rvPlayers.adapter = playerAdapter
-
-        // Avatar list
-        avatarAdapter = AvatarAdapter()
-        binding.rvAvatars.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.rvAvatars.adapter = avatarAdapter
-
-        binding.btnStartGame.setOnClickListener {
-            startGame()
-        }
+        binding.rvPlayers.adapter = adapter
     }
 
-    private fun observeRoom() {
+    // 🔥 Firebase real-time listener
+    private fun listenToPlayers() {
 
-        roomRepository.observeRoom(roomId) { room ->
+        database = FirebaseDatabase.getInstance()
+            .getReference("rooms")
+            .child(roomId)
+            .child("players")
 
-            room?.let {
-                val players = it.players.values.toList()
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
 
-                runOnUiThread {
-                    playerAdapter.submitList(players)
+                val playerList = mutableListOf<Player>()
+
+                for (child in snapshot.children) {
+                    val player = child.getValue(Player::class.java)
+                    if (player != null) {
+                        playerList.add(player)
+                    }
                 }
-            }
-        }
-    }
 
-    private fun startGame() {
-        val intent = Intent(this, LoadingActivity::class.java)
-        intent.putExtra("ROOM_ID", roomId)
-        startActivity(intent)
+                adapter.updatePlayers(playerList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@RoomActivity, "Failed to load players", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

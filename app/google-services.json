@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "518665909376",
+    "firebase_url": "https://topplethetiki-default-rtdb.firebaseio.com",
+    "project_id": "topplethetiki",
+    "storage_bucket": "topplethetiki.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:518665909376:android:5b01d350f5156ad31ce265",
+        "android_client_info": {
+          "package_name": "com.voxcom.topplethetiki"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "518665909376-itb0715qstcpvfr2tjjn611l3a4k3nlt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.voxcom.topplethetiki",
+            "certificate_hash": "25ee9989bcbfbab84ece17274f3c8808b1128e4e"
+          }
+        },
+        {
+          "client_id": "518665909376-pdell4sej17nsj8aatfi93k33r63dn9q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOh1xhCWRIHes2r8MR0-zvXTeAUHWfSwc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "518665909376-pdell4sej17nsj8aatfi93k33r63dn9q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

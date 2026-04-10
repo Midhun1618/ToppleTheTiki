@@ -1,26 +1,25 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.google.gms)
 }
 
 android {
     namespace = "com.voxcom.topplethetiki"
-
-    compileSdk = 36
-
-    buildFeatures {
-        viewBinding = true
-    }
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.voxcom.topplethetiki"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {
@@ -45,20 +44,21 @@ android {
 
 dependencies {
 
+    // AndroidX
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
 
-    // 🔥 Firebase
+    // 🔥 Firebase (BOM FIRST ALWAYS)
+    implementation(platform(libs.firebase.bom))
+
     implementation(libs.firebase.auth)
     implementation(libs.firebase.database)
+    implementation(libs.firebase.firestore)
 
-    // 🔐 Google Sign-In
-    implementation(libs.androidx.credentials.play.services.auth)
-
-    // Optional modern auth APIs
+    // 🔐 Google Sign-In (modern)
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
