@@ -2,7 +2,7 @@ package com.voxcom.topplethetiki.utils
 
 object GameUtils {
 
-    private val chars = ('A'..'Z') + ('0'..'9')
+    private val chars = ('a'..'b') + ('1'..'9')
 
     fun generateRoomCode(length: Int = 6): String {
         return (1..length)

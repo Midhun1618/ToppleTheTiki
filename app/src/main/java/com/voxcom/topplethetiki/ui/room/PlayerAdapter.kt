@@ -3,6 +3,7 @@ package com.voxcom.topplethetiki.ui.room
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.voxcom.topplethetiki.R
 import com.voxcom.topplethetiki.data.model.Player
 import com.voxcom.topplethetiki.databinding.ItemPlayerBinding
 
@@ -12,8 +13,9 @@ class PlayerAdapter(
 
     private val players = mutableListOf<Player>()
 
-    inner class PlayerViewHolder(val binding: ItemPlayerBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    inner class PlayerViewHolder(
+        val binding: ItemPlayerBinding
+    ) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerViewHolder {
         val binding = ItemPlayerBinding.inflate(
@@ -28,16 +30,29 @@ class PlayerAdapter(
 
         val player = players[position]
 
+        // ✅ Username
         holder.binding.tvUsername.text = player.username
 
+        // ✅ Avatar Mapping
+        val avatarRes = when (player.avatar) {
+            "avatar_1" -> R.drawable.avatar1
+            "avatar_2" -> R.drawable.avatar2
+            "avatar_3" -> R.drawable.avatar3
+            "avatar_4" -> R.drawable.avatar1
+            else -> R.drawable.avatar1
+        }
+
+        holder.binding.ivAvatar.setImageResource(avatarRes)
+
+        // ✅ Click (optional use)
         holder.itemView.setOnClickListener {
-            onClick(player) // 🔥 important
+            onClick(player)
         }
     }
 
     override fun getItemCount(): Int = players.size
 
-    // 🔥 Update list
+    // 🔥 Update player list
     fun updatePlayers(newPlayers: List<Player>) {
         players.clear()
         players.addAll(newPlayers)
