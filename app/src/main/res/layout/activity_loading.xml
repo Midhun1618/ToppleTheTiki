@@ -5,17 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="@drawable/jungledark_bg"
     android:orientation="vertical">
+
+
 
     <ProgressBar
         android:layout_width="60dp"
-        android:layout_height="60dp"/>
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:indeterminateTint="@color/white" />
+
 
     <TextView
         android:text="Shuffling cards..."
         android:textSize="18sp"
         android:layout_marginTop="16dp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/naluka"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
 
 </LinearLayout>
