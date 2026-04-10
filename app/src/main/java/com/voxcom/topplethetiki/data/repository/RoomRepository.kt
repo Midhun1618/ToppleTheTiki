@@ -1,30 +1,86 @@
 package com.voxcom.topplethetiki.data.repository
 
+import com.google.firebase.database.FirebaseDatabase
+import com.voxcom.topplethetiki.data.model.Player
+import com.voxcom.topplethetiki.utils.GameUtils
 
-import com.voxcom.topplethetiki.data.model.User
-import com.voxcom.topplethetiki.data.remote.AuthService
+class RoomRepository {
 
-class AuthRepository(
-    private val authService: AuthService = AuthService()
-) {
+    private val db = FirebaseDatabase.getInstance().reference
 
-    fun isLoggedIn(): Boolean {
-        return authService.isLoggedIn()
+    // 🔥 CREATE ROOM
+    fun createRoom(
+        hostId: String,
+        player: Player,
+        callback: (String) -> Unit
+    ) {
+
+        val roomId = GameUtils.generateRoomCode()
+
+        val roomRef = db.child("rooms").child(roomId)
+
+        val roomData = mapOf(
+            "roomId" to roomId,
+            "hostId" to hostId,
+            "status" to "waiting"
+        )
+
+        roomRef.setValue(roomData)
+            .addOnSuccessListener {
+
+                // ✅ Add host as first player
+                roomRef.child("players")
+                    .child(player.uid)
+                    .setValue(player)
+                    .addOnSuccessListener {
+                        callback(roomId) // 🔥 RETURN ROOM CODE
+                    }
+                    .addOnFailureListener {
+                        callback("") // failure
+                    }
+            }
+            .addOnFailureListener {
+                callback("")
+            }
     }
 
-    fun getCurrentUserId(): String? {
-        return authService.getCurrentUserId()
-    }
+    // 🔗 JOIN ROOM
+    fun joinRoom(
+        roomId: String,
+        player: Player,
+        callback: (Boolean, String?) -> Unit
+    ) {
 
-    fun signInWithGoogle(idToken: String, onResult: (Boolean, String?) -> Unit) {
-        authService.signInWithGoogle(idToken, onResult)
-    }
+        val roomRef = db.child("rooms").child(roomId)
 
-    fun saveUser(user: User, onComplete: () -> Unit) {
-        authService.saveUser(user, onComplete)
-    }
+        roomRef.get()
+            .addOnSuccessListener { snapshot ->
 
-    fun checkUsernameExists(username: String, callback: (Boolean) -> Unit) {
-        authService.checkUsernameExists(username, callback)
+                if (!snapshot.exists()) {
+                    callback(false, "Room not found")
+                    return@addOnSuccessListener
+                }
+
+                val playersNode = snapshot.child("players")
+                val playerCount = playersNode.childrenCount
+
+                if (playerCount >= 4) {
+                    callback(false, "Room full")
+                    return@addOnSuccessListener
+                }
+
+                roomRef.child("players")
+                    .child(player.uid)
+                    .setValue(player)
+                    .addOnSuccessListener {
+                        callback(true, null)
+                    }
+                    .addOnFailureListener {
+                        callback(false, "Failed to join")
+                    }
+            }
+            .addOnFailureListener {
+                callback(false, "Error fetching room")
+            }
     }
 }

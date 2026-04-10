@@ -2,22 +2,23 @@ package com.voxcom.topplethetiki.utils
 
 object GameUtils {
 
-    fun generateRoomCode(): String {
-        val chars = ('A'..'Z') + ('0'..'9')
-        return (1..6)
+    private val chars = ('A'..'Z') + ('0'..'9')
+
+    fun generateRoomCode(length: Int = 6): String {
+        return (1..length)
             .map { chars.random() }
             .joinToString("")
     }
 
     fun getInitialTikiStack(): List<String> {
-        return Constants.INITIAL_TIKI_STACK
+        return Constants.INITIAL_TIKI_STACK.toList() // 🔥 avoid mutation
     }
 
     fun isRoundComplete(stack: List<String>): Boolean {
-        return stack.size == 3
+        return stack.size <= 3 // 🔥 safer condition
     }
 
     fun getNextIndex(current: Int, size: Int): Int {
-        return (current + 1) % size
+        return if (size == 0) 0 else (current + 1) % size
     }
 }

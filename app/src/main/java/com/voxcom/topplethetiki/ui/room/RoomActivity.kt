@@ -27,6 +27,7 @@ class RoomActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         roomId = intent.getStringExtra("ROOM_ID") ?: ""
+        binding.tvRoomCode.text = "Room: $roomId"
 
         setupRecycler()
         listenToPlayers()
