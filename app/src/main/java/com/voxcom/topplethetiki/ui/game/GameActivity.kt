@@ -11,7 +11,6 @@ class GameActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGameBinding
     private lateinit var viewModel: GameViewModel
-
     private lateinit var adapter: GameAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,10 +24,12 @@ class GameActivity : AppCompatActivity() {
         val roomId = intent.getStringExtra("ROOM_ID") ?: ""
 
         viewModel = ViewModelProvider(this)[GameViewModel::class.java]
-        viewModel.init(roomId)
 
         setupUI()
         observeData()
+
+        // 🔥 INIT AFTER OBSERVE
+        viewModel.init(roomId)
     }
 
     private fun setupUI() {
@@ -50,6 +51,7 @@ class GameActivity : AppCompatActivity() {
     private fun observeData() {
 
         viewModel.tikiStack.observe(this) {
+            println("🎯 UI updating stack: $it")
             adapter.submitList(it)
         }
 

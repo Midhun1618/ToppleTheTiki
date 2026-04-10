@@ -3,6 +3,7 @@ package com.voxcom.topplethetiki.ui.game
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.voxcom.topplethetiki.data.model.GameState
 import com.voxcom.topplethetiki.domain.manager.GameManager
 import com.voxcom.topplethetiki.data.repository.GameRepository
@@ -25,12 +26,25 @@ class GameViewModel : ViewModel() {
     fun init(roomId: String) {
         this.roomId = roomId
 
+        // 🔥 TEMP FALLBACK (so UI never empty)
+        _tikiStack.value = listOf(
+            "t1","t2","t3","t4","t5","t6","t7","t8","t9"
+        )
+        _currentTurn.value = "Waiting..."
+
         repository.observeGameState(roomId) { state ->
-            state?.let {
-                currentState = it
-                _tikiStack.postValue(it.tikiStack)
-                _currentTurn.postValue(it.currentTurn)
+
+            if (state == null) {
+                println("⚠️ GameState is NULL")
+                return@observeGameState
             }
+
+            println("🔥 GameState received: $state")
+
+            currentState = state
+
+            _tikiStack.postValue(state.tikiStack)
+            _currentTurn.postValue(state.currentTurn)
         }
     }
 
@@ -40,13 +54,17 @@ class GameViewModel : ViewModel() {
 
     fun playTurn() {
 
-        val state = currentState ?: return
-        val tiki = selectedTiki ?: return
+        val state = currentState
+        val tiki = selectedTiki
 
-        val playerId = com.google.firebase.auth.FirebaseAuth
-            .getInstance().currentUser?.uid ?: return
+        if (state == null || tiki == null) {
+            println("❌ Cannot play turn (state or tiki missing)")
+            return
+        }
 
-        val action = "up1" // TEMP (later selectable)
+        val playerId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
+        val action = "up1" // TEMP
 
         gameManager.playTurn(
             roomId,
