@@ -12,20 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToppleTheTiki">
         <activity
-            android:name=".LoadingActivity"
+            android:name=".ui.room.RoomActivity"
             android:exported="false" />
         <activity
-            android:name=".LobbyActivity"
+            android:name=".ui.lobby.LobbyActivity"
             android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

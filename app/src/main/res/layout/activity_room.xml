@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Room Code -->
+    <TextView
+        android:id="@+id/tvRoomCode"
+        android:text="Room: ----"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <!-- Player List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPlayers"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Avatar Selection -->
+    <TextView
+        android:text="Select Avatar"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAvatars"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
+
+    <!-- Ready Button -->
+    <Button
+        android:id="@+id/btnReady"
+        android:text="Ready"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!-- Start Button -->
+    <Button
+        android:id="@+id/btnStartGame"
+        android:text="Start Game"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
