@@ -22,6 +22,8 @@ class GameViewModel : ViewModel() {
 
     private val _currentTurn = MutableLiveData<String>()
     val currentTurn: LiveData<String> = _currentTurn
+    private val _gameState = MutableLiveData<GameState>()
+    val gameState: LiveData<GameState> = _gameState
 
     fun init(roomId: String) {
         this.roomId = roomId
@@ -42,6 +44,17 @@ class GameViewModel : ViewModel() {
             println("🔥 GameState received: $state")
 
             currentState = state
+
+            _tikiStack.postValue(state.tikiStack)
+            _currentTurn.postValue(state.currentTurn)
+        }
+        repository.observeGameState(roomId) { state ->
+
+            if (state == null) return@observeGameState
+
+            currentState = state
+
+            _gameState.postValue(state)   // ✅ ADD THIS
 
             _tikiStack.postValue(state.tikiStack)
             _currentTurn.postValue(state.currentTurn)
