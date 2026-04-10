@@ -49,25 +49,27 @@
 
     <LinearLayout
         android:id="@+id/layoutSecret"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:padding="8dp"
+        android:layout_width="90dp"
+        android:layout_height="180dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/secret_card_bg">
 
         <ImageView
             android:id="@+id/secret1"
-            android:layout_width="60dp"
-            android:layout_height="60dp"/>
+            android:layout_width="80dp"
+            android:layout_height="50dp"/>
 
         <ImageView
             android:id="@+id/secret2"
-            android:layout_width="60dp"
-            android:layout_height="60dp"/>
+            android:layout_width="80dp"
+            android:layout_height="50dp"/>
 
         <ImageView
             android:id="@+id/secret3"
-            android:layout_width="60dp"
-            android:layout_height="60dp"/>
+            android:layout_width="80dp"
+            android:layout_height="50dp"/>
     </LinearLayout>
 
     <!-- 🎴 Action Cards -->

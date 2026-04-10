@@ -14,6 +14,7 @@ class GameActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameBinding
     private lateinit var viewModel: GameViewModel
     private lateinit var adapter: GameAdapter
+    private lateinit var cardAdapter: CardAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +40,14 @@ class GameActivity : AppCompatActivity() {
         adapter = GameAdapter { tiki ->
             viewModel.onTikiSelected(tiki)
         }
+        cardAdapter = CardAdapter { card ->
+            viewModel.onCardSelected(card)
+        }
+
+        binding.rvCards.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        binding.rvCards.adapter = cardAdapter
 
         binding.rvTikiStack.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -55,6 +64,10 @@ class GameActivity : AppCompatActivity() {
         viewModel.tikiStack.observe(this) {
             println("🎯 UI updating stack: $it")
             adapter.submitList(it)
+        }
+
+        viewModel.cards.observe(this) {
+            cardAdapter.submitList(it)
         }
 
         viewModel.currentTurn.observe(this) {
@@ -89,4 +102,5 @@ class GameActivity : AppCompatActivity() {
         binding.secret2.setImageResource(map[secret[1]] ?: R.drawable.t1)
         binding.secret3.setImageResource(map[secret[2]] ?: R.drawable.t1)
     }
+
 }

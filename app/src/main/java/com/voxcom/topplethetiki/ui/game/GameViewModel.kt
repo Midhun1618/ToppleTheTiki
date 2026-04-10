@@ -24,6 +24,10 @@ class GameViewModel : ViewModel() {
     val currentTurn: LiveData<String> = _currentTurn
     private val _gameState = MutableLiveData<GameState>()
     val gameState: LiveData<GameState> = _gameState
+    private val _cards = MutableLiveData<List<String>>()
+    val cards: LiveData<List<String>> = _cards
+    private var selectedCard: String? = null
+
 
     fun init(roomId: String) {
         this.roomId = roomId
@@ -33,6 +37,15 @@ class GameViewModel : ViewModel() {
             "t1","t2","t3","t4","t5","t6","t7","t8","t9"
         )
         _currentTurn.value = "Waiting..."
+        _cards.value = listOf(
+            "up1",
+            "up2",
+            "up3",
+            "toss",
+            "top",
+            "bottom",
+            "up1"
+        )
 
         repository.observeGameState(roomId) { state ->
 
@@ -59,6 +72,9 @@ class GameViewModel : ViewModel() {
             _tikiStack.postValue(state.tikiStack)
             _currentTurn.postValue(state.currentTurn)
         }
+    }
+    fun onCardSelected(card: String) {
+        selectedCard = card
     }
 
     fun onTikiSelected(tiki: String) {
