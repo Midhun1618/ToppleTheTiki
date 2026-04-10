@@ -1,54 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/main"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@drawable/jungle_bg">
 
-    <!-- Room Code -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E6000000" />
+
     <TextView
         android:id="@+id/tvRoomCode"
-        android:text="Room: ----"
-        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/naluka"
+        android:text="Room: T-482"
+        android:textColor="#FF9800"
+        android:textSize="32sp"
         android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Player List -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPlayers"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="16dp"/>
-
-    <!-- Avatar Selection -->
     <TextView
-        android:text="Select Avatar"
-        android:layout_marginTop="16dp"
+        android:id="@+id/tvSubHeader"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="WAITING FOR TRIBE MEMBERS"
+        android:textColor="#80FFFFFF"
+        android:textSize="12sp"
+        android:letterSpacing="0.1"
+        app:layout_constraintTop_toBottomOf="@id/tvRoomCode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAvatars"
         android:layout_width="match_parent"
-        android:layout_height="100dp"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingHorizontal="16dp"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/tvSubHeader" />
 
-    <!-- Ready Button -->
-    <Button
-        android:id="@+id/btnReady"
-        android:text="Ready"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPlayers"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="24dp"
         android:layout_marginTop="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnReady"
+        app:layout_constraintTop_toBottomOf="@id/rvAvatars" />
 
-    <!-- Start Button -->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnReady"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="12dp"
+        android:background="#FF9800"
+        android:text="READY UP"
+        android:fontFamily="@font/naluka"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btnStartGame" />
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnStartGame"
-        android:text="Start Game"
-        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="40dp"
+        android:background="#1AFFFFFF"
+        android:text="START MATCH"
+        android:fontFamily="@font/naluka"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
