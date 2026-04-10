@@ -14,6 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginBottom="8dp"/>
+    <TextView
+        android:id="@+id/tvTurn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Turn: Player"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_marginTop="4dp"/>
 
     <!-- 🗿 Tiki Stack -->
     <TextView
@@ -75,5 +83,11 @@
         android:id="@+id/rvCards"
         android:layout_width="match_parent"
         android:layout_height="100dp"/>
+    <Button
+        android:id="@+id/btnPlayAction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Play Action"
+        android:layout_marginTop="8dp"/>
 
 </LinearLayout>
