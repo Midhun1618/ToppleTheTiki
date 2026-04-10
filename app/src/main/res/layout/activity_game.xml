@@ -2,29 +2,78 @@
 <LinearLayout
     android:id="@+id/main"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#121212"
+    android:padding="8dp">
 
+    <!-- 🧑 Players -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPlayers"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- 🗿 Tiki Stack -->
     <TextView
-        android:id="@+id/tvTurn"
-        android:text="Turn"
-        android:textSize="18sp"
+        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:text="Tiki Stack"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="4dp"
+        android:textStyle="bold"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTikiStack"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="16dp"/>
+        android:layout_height="120dp"
+        android:layout_marginTop="4dp"/>
 
-    <Button
-        android:id="@+id/btnPlayAction"
-        android:text="Play Move"
-        android:layout_marginTop="16dp"
+    <!-- 🎯 Secret Card -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Secret"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:id="@+id/layoutSecret"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/secret1"
+            android:layout_width="60dp"
+            android:layout_height="60dp"/>
+
+        <ImageView
+            android:id="@+id/secret2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"/>
+
+        <ImageView
+            android:id="@+id/secret3"
+            android:layout_width="60dp"
+            android:layout_height="60dp"/>
+    </LinearLayout>
+
+    <!-- 🎴 Action Cards -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Cards"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCards"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
 
 </LinearLayout>
