@@ -78,9 +78,6 @@ class LobbyActivity : AppCompatActivity() {
         binding.btnJoinRoom.setOnClickListener {
             if(binding.etRoomCode.visibility == View.VISIBLE){
 
-
-
-
             val roomId = binding.etRoomCode.text.toString().trim()
 
             if (roomId.isEmpty()) {
