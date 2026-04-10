@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- 🌐 REQUIRED FOR FIREBASE -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,12 +14,49 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ToppleTheTiki">
+
+        <!-- 🔐 LOGIN (STARTING POINT) -->
         <activity
-            android:name=".ui.room.RoomActivity"
-            android:exported="false" />
+            android:name=".ui.auth.LoginActivity"
+            android:exported="true">
+
+            <!-- 🚀 LAUNCHER ACTIVITY -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 🏠 LOBBY -->
         <activity
             android:name=".ui.lobby.LobbyActivity"
             android:exported="false" />
+
+        <!-- 🎮 ROOM -->
+        <activity
+            android:name=".ui.room.RoomActivity"
+            android:exported="false" />
+
+        <!-- ⏳ LOADING -->
+        <activity
+            android:name=".ui.loading.LoadingActivity"
+            android:exported="false" />
+
+        <!-- 🎮 GAME -->
+        <activity
+            android:name=".ui.game.GameActivity"
+            android:exported="false" />
+
+        <!-- 🏁 ROUND RESULT -->
+        <activity
+            android:name=".ui.result.RoundResultActivity"
+            android:exported="false" />
+
+        <!-- 🏆 FINAL RESULT -->
+        <activity
+            android:name=".ui.result.FinalResultActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

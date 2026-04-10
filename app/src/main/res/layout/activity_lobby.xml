@@ -1,23 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
     android:id="@+id/main"
-    android:orientation="vertical"
-    android:gravity="center"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LobbyActivity">
-    <EditText
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_horizontal">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="Enter Number"
-        android:id="@+id/inputNos"/>
+        android:text="Tiki Topple"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="40dp" />
+
+    <!-- Create Room Button -->
     <Button
-        android:layout_width="wrap_content"
+        android:id="@+id/btnCreateRoom"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/goBtn"
-        android:text="Start Game"/>
+        android:text="Create Room" />
+
+    <!-- Divider -->
+    <TextView
+        android:text="OR"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Room Code Input -->
+    <EditText
+        android:id="@+id/etRoomCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Room Code"
+        android:inputType="text"
+        android:padding="12dp" />
+
+    <!-- Join Room Button -->
+    <Button
+        android:id="@+id/btnJoinRoom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Join Room"
+        android:layout_marginTop="12dp" />
 
 </LinearLayout>

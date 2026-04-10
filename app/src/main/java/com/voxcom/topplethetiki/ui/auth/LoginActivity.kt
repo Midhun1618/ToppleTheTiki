@@ -3,6 +3,7 @@ package com.voxcom.topplethetiki.ui.auth
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.*
 import com.google.firebase.auth.FirebaseAuth
@@ -17,11 +18,12 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var googleSignInClient: GoogleSignInClient
 
     private val authRepository = AuthRepository()
-
     private val RC_SIGN_IN = 1001
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        enableEdgeToEdge()
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -29,28 +31,30 @@ class LoginActivity : AppCompatActivity() {
         setupGoogleSignIn()
 
         binding.btnGoogleLogin.setOnClickListener {
-            signInWithGoogle()
+            signIn()
         }
     }
 
     private fun setupGoogleSignIn() {
         val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id)) // from Firebase
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, options)
     }
 
-    private fun signInWithGoogle() {
+    private fun signIn() {
         val intent = googleSignInClient.signInIntent
         startActivityForResult(intent, RC_SIGN_IN)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == RC_SIGN_IN) {
+
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
 
             if (task.isSuccessful) {
@@ -67,34 +71,27 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun firebaseAuth(idToken: String) {
+
         authRepository.signInWithGoogle(idToken) { success, error ->
 
-            if (success) {
+            runOnUiThread {
+                if (success) {
 
-                val uid = FirebaseAuth.getInstance().currentUser?.uid
+                    val user = FirebaseAuth.getInstance().currentUser
 
-                if (uid != null) {
-                    checkUserExists(uid)
+                    if (user != null) {
+                        goToLobby()
+                    }
+
+                } else {
+                    Toast.makeText(this, error ?: "Login Failed", Toast.LENGTH_SHORT).show()
                 }
-
-            } else {
-                Toast.makeText(this, error ?: "Login Failed", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun checkUserExists(uid: String) {
-
-        // Check if username exists in DB
-        authRepository.checkUsernameExists(uid) { exists ->
-
-            if (exists) {
-                startActivity(Intent(this, LobbyActivity::class.java))
-            } else {
-                startActivity(Intent(this, UsernameActivity::class.java))
-            }
-
-            finish()
-        }
+    private fun goToLobby() {
+        startActivity(Intent(this, LobbyActivity::class.java))
+        finish()
     }
-}}
+}

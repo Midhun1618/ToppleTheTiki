@@ -1,19 +1,60 @@
-package com.voxcom.topplethetiki.ui.result
+package com.voxcom.topplethetiki.ui.game
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.voxcom.topplethetiki.databinding.ActivityRoundResultBinding
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.voxcom.topplethetiki.databinding.ActivityGameBinding
 
-class RoundResultActivity : AppCompatActivity() {
+class GameActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityRoundResultBinding
+    private lateinit var binding: ActivityGameBinding
+    private lateinit var viewModel: GameViewModel
+
+    private lateinit var adapter: GameAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityRoundResultBinding.inflate(layoutInflater)
+        enableEdgeToEdge()
+
+        binding = ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.tvResult.text = "Round Completed!"
+        val roomId = intent.getStringExtra("ROOM_ID") ?: ""
+
+        viewModel = ViewModelProvider(this)[GameViewModel::class.java]
+        viewModel.init(roomId)
+
+        setupUI()
+        observeData()
+    }
+
+    private fun setupUI() {
+
+        adapter = GameAdapter { tiki ->
+            viewModel.onTikiSelected(tiki)
+        }
+
+        binding.rvTikiStack.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        binding.rvTikiStack.adapter = adapter
+
+        binding.btnPlayAction.setOnClickListener {
+            viewModel.playTurn()
+        }
+    }
+
+    private fun observeData() {
+
+        viewModel.tikiStack.observe(this) {
+            adapter.submitList(it)
+        }
+
+        viewModel.currentTurn.observe(this) {
+            binding.tvTurn.text = "Turn: $it"
+        }
     }
 }
