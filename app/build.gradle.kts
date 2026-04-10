@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.google.gms)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -56,7 +56,7 @@ dependencies {
     implementation(libs.firebase.database)
 
     // 🔐 Google Sign-In
-    implementation(libs.play.services.auth)
+    implementation(libs.androidx.credentials.play.services.auth)
 
     // Optional modern auth APIs
     implementation(libs.androidx.credentials)
