@@ -2,6 +2,7 @@ package com.voxcom.topplethetiki.ui.lobby
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -75,6 +76,10 @@ class LobbyActivity : AppCompatActivity() {
 
         // 🔗 JOIN ROOM
         binding.btnJoinRoom.setOnClickListener {
+            if(binding.etRoomCode.visibility == View.VISIBLE){
+
+
+
 
             val roomId = binding.etRoomCode.text.toString().trim()
 
@@ -111,7 +116,12 @@ class LobbyActivity : AppCompatActivity() {
                     }
                 }
             }
+            }else{
+                binding.etRoomCode.visibility = View.VISIBLE
+                return@setOnClickListener
+            }
         }
+
     }
 
     // 🔥 Fetch username from Firebase
