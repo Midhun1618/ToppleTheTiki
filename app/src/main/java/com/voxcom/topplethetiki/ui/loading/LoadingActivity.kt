@@ -38,14 +38,22 @@ class LoadingActivity : AppCompatActivity() {
 
             if (playerIds.isEmpty()) return@addOnSuccessListener
 
-            // 🔥 TURN ORDER
+            // ✅ FIX 1: DEFINE turnOrder FIRST
             val turnOrder = playerIds.shuffled()
 
-            val firstTurnIndex = 0
-            val firstPlayer = turnOrder[firstTurnIndex]
+            val firstPlayer = turnOrder[0]
 
-            // 🔥 TIKI STACK (ORDERED)
+            // ✅ FIX 2: TIKI STACK
             val tikiStack = GameUtils.getInitialTikiStack()
+
+            // ✅ FIX 3: SECRET CARDS
+            val secretCards = GameUtils.getSecretCards().shuffled()
+
+            val playerSecrets = mutableMapOf<String, List<String>>()
+
+            for ((index, playerId) in turnOrder.withIndex()) {
+                playerSecrets[playerId] = secretCards[index]
+            }
 
             val gameState = GameState(
                 roundNumber = 1,
@@ -59,13 +67,11 @@ class LoadingActivity : AppCompatActivity() {
                 currentTurn = firstPlayer,
 
                 turnLocked = false,
-
                 currentPlayerAction = null,
 
-                playerSecrets =playerSecrets // 🔥 ADD THIS
+                playerSecrets = playerSecrets
             )
 
-            // 🔥 PUSH TO FIREBASE
             roomRef.child("gameState").setValue(gameState)
                 .addOnSuccessListener {
 
@@ -78,14 +84,6 @@ class LoadingActivity : AppCompatActivity() {
 
                     }, 1500)
                 }
-        }
-        // 🔥 SECRET CARD ASSIGN
-        val secretCards = GameUtils.getSecretCards().shuffled()
-
-        val playerSecrets = mutableMapOf<String, List<String>>()
-
-        for ((index, playerId) in turnOrder.withIndex()) {
-            playerSecrets[playerId] = secretCards[index]
         }
     }
 }

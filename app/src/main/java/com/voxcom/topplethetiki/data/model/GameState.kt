@@ -16,5 +16,6 @@ data class GameState(
     val turnLocked: Boolean = false,
 
     val currentPlayerAction: PlayerAction? = null,
-    val playerSecrets: Map<String, List<String>> = emptyMap()
+
+    val playerSecrets: Map<String, List<String>> = emptyMap() // ✅ ADD THIS
 )
