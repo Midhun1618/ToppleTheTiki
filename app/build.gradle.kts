@@ -1,16 +1,16 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.google.gms)
 }
 
 android {
     namespace = "com.voxcom.topplethetiki"
-    compileSdk {
-        version = release(36)
-    }
+
+    compileSdk = 36
+
     buildFeatures {
-        viewBinding=true
+        viewBinding = true
     }
 
     defaultConfig {
@@ -32,27 +32,39 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
 }
 
 dependencies {
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    // 🔥 Firebase
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.database)
+
+    // 🔐 Google Sign-In
+    implementation(libs.play.services.auth)
+
+    // Optional modern auth APIs
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
-    implementation(libs.firebase.database)
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.espresso)
 }
