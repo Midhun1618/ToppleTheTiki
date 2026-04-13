@@ -37,11 +37,8 @@ class RoomActivity : AppCompatActivity() {
         setupStartButton()
         listenForGameStart()
     }
-
-    // 🎮 Recycler setup
     private fun setupRecycler() {
 
-        // ✅ Player list
         adapter = PlayerAdapter { player ->
             Toast.makeText(this, player.username, Toast.LENGTH_SHORT).show()
         }
@@ -49,10 +46,7 @@ class RoomActivity : AppCompatActivity() {
         binding.rvPlayers.layoutManager = LinearLayoutManager(this)
         binding.rvPlayers.adapter = adapter
 
-        // ✅ Avatar preview (optional)
-        binding.rvAvatars.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.rvAvatars.adapter = AvatarAdapter()
+
     }
 
     // 🔥 Listen players + auto avatar assign
@@ -73,7 +67,9 @@ class RoomActivity : AppCompatActivity() {
 
                 for ((index, child) in sortedPlayers.withIndex()) {
 
-                    val player = child.getValue(Player::class.java)
+                    val player = child.getValue(Player::class.java)?.copy(
+                        uid = child.key ?: ""
+                    )
 
                     if (player != null) {
 
@@ -132,7 +128,7 @@ class RoomActivity : AppCompatActivity() {
                 val hostId = snapshot.child("hostId").getValue(String::class.java)
                 val currentUser = FirebaseAuth.getInstance().uid
 
-                // ❌ Only host can start
+
                 if (currentUser != hostId) {
                     Toast.makeText(this, "Only host can start", Toast.LENGTH_SHORT).show()
                     return@addOnSuccessListener
@@ -154,8 +150,6 @@ class RoomActivity : AppCompatActivity() {
                     Toast.makeText(this, "All players not ready", Toast.LENGTH_SHORT).show()
                     return@addOnSuccessListener
                 }
-
-                // 🔥 START GAME
                 roomRef.child("status").setValue("starting")
             }
         }

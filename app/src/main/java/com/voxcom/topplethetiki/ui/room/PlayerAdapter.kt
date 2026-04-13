@@ -13,6 +13,9 @@ class PlayerAdapter(
 
     private val players = mutableListOf<Player>()
 
+    // 🔥 Track current turn
+    private var currentTurnUid: String? = null
+
     inner class PlayerViewHolder(
         val binding: ItemPlayerBinding
     ) : RecyclerView.ViewHolder(binding.root)
@@ -44,7 +47,15 @@ class PlayerAdapter(
 
         holder.binding.ivAvatar.setImageResource(avatarRes)
 
-        // ✅ Click (optional use)
+        // 🔥 Highlight current player turn
+        val isCurrentPlayer = player.uid == currentTurnUid
+
+        holder.binding.root.setBackgroundResource(
+            if (isCurrentPlayer) R.drawable.player_turn_highlight
+            else android.R.color.transparent
+        )
+
+        // ✅ Click
         holder.itemView.setOnClickListener {
             onClick(player)
         }
@@ -56,6 +67,12 @@ class PlayerAdapter(
     fun updatePlayers(newPlayers: List<Player>) {
         players.clear()
         players.addAll(newPlayers)
+        notifyDataSetChanged()
+    }
+
+    // 🔥 Update current turn
+    fun setCurrentTurn(uid: String) {
+        currentTurnUid = uid
         notifyDataSetChanged()
     }
 }

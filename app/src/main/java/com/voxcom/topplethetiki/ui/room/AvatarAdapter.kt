@@ -8,7 +8,6 @@ import com.voxcom.topplethetiki.databinding.ItemAvatarBinding
 
 class AvatarAdapter : RecyclerView.Adapter<AvatarAdapter.AvatarViewHolder>() {
 
-    // 🔥 These should match what you assign in RoomActivity
     private val avatars = listOf("avatar_1", "avatar_2", "avatar_3", "avatar_4")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AvatarViewHolder {
