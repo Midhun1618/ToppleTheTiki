@@ -5,9 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/jungle_bg"
-    android:padding="8dp"
-    >
+    android:background="#121212"
+    android:padding="8dp">
 
     <!-- 🧑 Players -->
     <androidx.recyclerview.widget.RecyclerView
@@ -20,96 +19,77 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Turn: Player"
-        android:fontFamily="@font/naluka"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         android:layout_marginTop="4dp"/>
 
     <!-- 🗿 Tiki Stack -->
-
-
-    <!-- 🎯 Secret Card -->
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <LinearLayout
-            android:id="@+id/layoutSecret"
-            android:padding="8dp"
-            android:layout_width="90dp"
-            android:layout_height="150dp"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="@drawable/secret_card_template">
-            <ImageView
-                android:id="@+id/secret1"
-                android:layout_width="80dp"
-                android:scaleType="fitXY"
-                android:layout_marginTop="24dp"
-                android:layout_height="32dp"/>
-
-            <ImageView
-                android:id="@+id/secret2"
-                android:layout_width="80dp"
-                android:scaleType="fitXY"
-                android:layout_height="35dp"/>
-
-            <ImageView
-                android:id="@+id/secret3"
-                android:layout_width="80dp"
-                android:scaleType="fitXY"
-                android:layout_height="32dp"/>
-        </LinearLayout>
-
-        <!-- 🎴 Action Cards -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_margin="8dp"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Your Cards"
-                android:fontFamily="@font/naluka"
-                android:textColor="#FFFFFF"
-                android:layout_marginTop="8dp"
-                android:textStyle="bold"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvCards"
-
-                android:layout_width="match_parent"
-                android:layout_height="100dp"/>
-        </LinearLayout>
-
-    </LinearLayout>
-
-
-    <Button
-        android:id="@+id/btnPlayAction"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Play Action"
-        android:fontFamily="@font/naluka"
-        android:layout_marginTop="8dp"/>
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="Tiki Stack"
         android:textColor="#FFFFFF"
-        android:fontFamily="@font/naluka"
         android:layout_marginTop="4dp"
         android:textStyle="bold"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTikiStack"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
+        android:layout_height="120dp"
         android:layout_marginTop="4dp"/>
+
+    <!-- 🎯 Secret Card -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Secret"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:id="@+id/layoutSecret"
+        android:padding="8dp"
+        android:layout_width="90dp"
+        android:layout_height="180dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/secret_card_bg">
+
+        <ImageView
+            android:id="@+id/secret1"
+            android:layout_width="80dp"
+            android:layout_height="50dp"/>
+
+        <ImageView
+            android:id="@+id/secret2"
+            android:layout_width="80dp"
+            android:layout_height="50dp"/>
+
+        <ImageView
+            android:id="@+id/secret3"
+            android:layout_width="80dp"
+            android:layout_height="50dp"/>
+    </LinearLayout>
+
+    <!-- 🎴 Action Cards -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Cards"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCards"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
+    <Button
+        android:id="@+id/btnPlayAction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Play Action"
+        android:layout_marginTop="8dp"/>
 
 </LinearLayout>
